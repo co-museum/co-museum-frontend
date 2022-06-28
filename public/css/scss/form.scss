@@ -1,0 +1,37 @@
+
+
+.standard-input {
+  @extend .m-0;
+  margin-top: 19px !important;
+  margin-bottom: 20px !important;
+  background-color: $silver !important;
+  input::placeholder {
+    color: $grey !important;
+  }
+  input {
+    padding: 9px 14px !important;
+  }
+  fieldset {
+    @extend .p-0;
+    border: none !important
+  }
+
+  &.xs {
+    input {
+      height: 32px;
+      padding: 5px 12px !important;
+      border-radius: 4px;
+    }
+    fieldset {
+      height: 32px;
+      padding: 5px 12px !important;
+      border-radius: 4px;
+    }
+  }
+}
+
+
+.rounded-input .MuiOutlinedInput-root {
+  @extend .standard-input;
+  border-radius: 30px !important;
+}

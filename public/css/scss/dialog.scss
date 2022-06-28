@@ -1,0 +1,312 @@
+
+.MuiDialog-root {
+  background-color: rgba($white, 0.95);
+}
+
+
+.dialog {
+  &.dialog-xs {
+    .MuiDialog-paper {
+      max-width: 400px !important;
+    }
+  }
+  .MuiDialog-paper {
+    min-width: 400px !important;
+    //min-height: 310px !important;
+    border-radius: 10px !important;
+    background-color: $white;
+    .dialog-title {
+      @extend .font-24;
+      @extend .p-0;
+      @extend .m-0;
+    }
+    .dialog-description {
+      @extend .font-16;
+      color: $grey;
+      @extend .p-0;
+      @extend .m-0;
+    }
+
+    hr {
+      border-bottom-width: 2px;
+    }
+
+    .social-networks {
+      .item {
+        @extend .p-0;
+        margin-right: 12px;
+      }
+      .divider {
+        margin-top: 30px !important;
+        margin-bottom: 20px !important;
+      }
+      .chip-link{
+        width: 80%;
+        height: 32px;
+        background-color: $silver !important;
+        border-radius: 4px !important;
+        span {
+          @extend .font-16;
+          color: $grey;
+          line-height: 22px;
+          overflow-x: scroll;
+          text-overflow: unset;
+        }
+        margin-right: 10px;
+      }
+      .copy-btn {
+        height: 32px;
+        width: 85px;
+        border-radius: 4px;
+        padding: 5px 12px;
+
+      }
+    }
+  }
+
+  .d-inline {
+    hr:first-child {
+      margin-top: 0;
+    }
+  }
+
+  .dialog-title-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+
+
+    .MuiButtonBase-root {
+      position: relative;
+      padding: 0;
+      top: 0;
+      left: 0;
+    }
+  }
+}
+
+.artwork-page {
+  .dialog-content {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+  .divider-menu {
+    color: $grey-3;
+  }
+  .divider {
+    color: $black-3;
+  }
+  .MuiDialog-paper {
+    height: 90vh;
+    min-width: 80vw !important;
+  }
+  .artwork-page-navigation {
+    background-color: $green;
+
+    .item {
+      h4 {
+        padding: 5px 0;
+        color: $black-2 !important;
+        font-size: 14px;
+        font-weight: 200;
+        margin: 5px 0;
+        display: flex;
+        align-items: center;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: white;
+        margin: 0 10px;
+      }
+    }
+  }
+  .artwork-page-states {
+    .MuiTab-root {
+      @extend .font-grey-2;
+      text-transform: capitalize !important;
+      &.Mui-selected {
+        @extend .font-black;
+      }
+    }
+  }
+
+  .artwork-about {
+    width: 100%;
+    background-color: $black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    .item {
+      display: flex;
+      justify-content: center;
+      padding: 40px 0;
+    }
+
+    .owl-dots {
+      position: absolute;
+      right: -20px;
+      top: calc(50% - 50px);
+      transform: rotate(90deg);
+    }
+  }
+
+  .artwork-membership {
+    margin-top: 56px;
+    margin-left: 30px;
+    margin-right: 30px;
+  }
+
+  .artwork-tokenomics {
+    padding: 30px !important;
+    th {
+      padding-top: 8px;
+      padding-bottom: 8px;
+    }
+  }
+}
+
+.dialog-image {
+  .MuiDialog-paper {
+    min-width: 500px !important;
+    min-height: 310px !important;
+    border-radius: 10px !important;
+    background-color: transparent;
+    box-shadow: none;
+  }
+}
+
+.membership-items {
+  margin-top: 23.5px !important;
+  @extend .d-flex;
+  justify-content: space-between;
+  .membership-item-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: $silver;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    width: calc(33.33333% - 15px);
+  }
+  .membership-item {
+    @extend .box;
+    background-color: $silver;
+    border-radius: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 17px;
+    width: calc(100% - 40px);
+    .item-divider {
+      border-color: $black;
+    }
+    .item-title {
+      @extend .font-24;
+      @extend .font-black;
+      margin-top: 14px;
+      margin-bottom: 14px;
+    }
+  }
+}
+
+
+.mx-m {
+  margin-right: -24px;
+  margin-left: -24px;
+}
+
+.release-title {
+  width: 360px;
+}
+
+
+.buy-token-item {
+  opacity: 0.2;
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.buy-token-packages-content, .artwork-membership-content {
+  &.loading-page, &.preview-page {
+    background-color: rgba($white, 0.95) !important;
+    .buy-token-item, .artwork-membership {
+      opacity: 0.2;
+    }
+  }
+  &.loading-page {
+    .loading {
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-top: 340px;
+      margin-left: auto;
+      margin-right: auto;
+      width: 488px;
+      z-index: 10000000;
+      .MuiLinearProgress-root {
+        height: 16px;
+        border-radius: 8px;
+        background-color: $black-2;
+      }
+      .MuiLinearProgress-bar {
+        background-color: $green;
+      }
+    }
+  }
+  &.preview-page {
+    .preview {
+      background-color: rgba($white, 0.95) !important;
+      display: block;
+      position: absolute;
+      left: 0;
+      right: 0;
+      margin-left: auto;
+      margin-right: auto;
+      z-index: 10000000;
+      p {
+        margin-bottom: 40px;
+      }
+      img.item {
+        height: 483px;
+        border: 8px solid $green;
+        &.circle {
+          border: none;
+        }
+
+      }
+    }
+  }
+
+  .loading, .preview {
+    display: none;
+  }
+
+  .membership-banner {
+    background: black;
+    .item {
+      h4 {
+        padding: 5px 0;
+        color: white !important;
+        font-size: 14px;
+        font-weight: 200;
+        margin: 5px 0;
+        display: flex;
+        align-items: center;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: $green;
+        margin: 0 10px;
+      }
+    }
+  }
+}

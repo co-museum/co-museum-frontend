@@ -1,0 +1,15 @@
+
+
+.footer {
+  padding-top: 17px;
+  padding-bottom: 17px;
+  padding-left: 30px;
+  padding-right: 30px;
+  border-top: solid 1px $black;
+}
+
+
+.social-button {
+  @extend .image-24x24;
+  margin-right: 10px;
+}

@@ -1,0 +1,368 @@
+
+.show-m {
+  display: none;
+}
+
+@media only screen and (max-width: $mobile) {
+
+  .hide-m {
+    display: none !important;
+  }
+
+  .text-left-m {
+    text-align: left;
+  }
+
+  .items-start-m {
+    align-items: start !important;
+  }
+  .m-xs {
+    height: 32px !important;
+    border-radius: 4px !important;
+    padding: 5px 12px !important;
+  }
+  .m-xxs {
+    padding: 2px 8px !important;
+  }
+
+  .image-156x156-m {
+    height: 156px !important;
+    width: 156px !important;
+  }
+
+  .font-12-m {
+    font-size: 12px;
+  }
+  .show-m {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .p-m-0-m {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .flex-row-between {
+    flex-direction: row !important;
+    justify-content: space-between !important;
+  }
+
+  .basics-w-100-m {
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+
+  .w-100-m {
+    width: 100% !important;
+  }
+
+  .br-b-1-m {
+    border-bottom: 1px solid;
+  }
+
+  .br-b-0-m {
+    border-bottom: 0 !important;
+  }
+
+  .mr-8-m {
+    margin-right: 8px;
+  }
+
+  .mr-16-m {
+    margin-right: 16px !important;
+  }
+  .mt-0-m {
+    margin-top: 0 !important;
+  }
+
+  .h-auto-m {
+    height: auto !important;
+  }
+
+  * {
+    margin: 0 !important;
+    font-size: 24px;
+  }
+
+  .image-12x12 {
+    @include image-same-size(22px);
+  }
+
+  .image-14x14 {
+    @include image-same-size(24px);
+  }
+
+  .image-18x18 {
+    @include image-same-size(28px);
+  }
+
+
+  .footer {
+    a, p {
+      margin: 0 !important;
+      font-size: 12px;
+    }
+    .MuiGrid-item {
+      padding: 0 !important;
+    }
+
+  }
+  .footer-right-container {
+    .social-button {
+      margin-right: 10px !important;
+    }
+    .items {
+      display: flex;
+      align-items: center;
+      margin: 0 !important;
+    }
+  }
+
+  .header-container {
+    display: inline;
+    .main-menu {
+      padding: 15px 24px !important;
+      display: flex !important;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      max-width: unset;
+    }
+    .m-menu {
+      flex-direction: row;
+      button span {
+        font-size: 16px;
+      }
+    }
+    div {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+  }
+
+  .menu-m-options {
+    left: 0 !important;
+    position: fixed;
+    width: 100vw;
+    min-width: unset;
+    max-width: unset;
+    height: -webkit-fill-available;
+    min-height: unset;
+    max-height: unset;
+    top: 89px !important;
+  }
+
+
+  .box {
+    border-radius: 0 !important;
+  }
+
+  .my-collection-info {
+    flex-direction: column;
+  }
+
+  .w-100-m-b {
+    flex-basis: 100%;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .my-collection-page {
+    .item-info-form {
+      flex-direction: column;
+      max-width: 100%;
+      flex-basis: 100%;
+      .item-info {
+        width: 100%;
+      }
+    }
+    .my-collection-items {
+      grid-auto-flow: column;
+    }
+}
+
+  .my-collection-container {
+
+    .item-options {
+      margin-top: -30px !important;
+      .image-12x12 {
+        margin-right: 10px !important;
+      }
+      .float-right {
+        display: none;
+      }
+    }
+
+    .my-collection-avatar {
+      height: 33vh !important;
+    }
+
+    .item-info {
+      position: unset;
+    }
+
+    display: block;
+    padding-left: 5% !important;
+    padding-right: 5% !important;
+
+    .my-collection-options {
+      flex-direction: column;
+      margin-top: 10px !important;
+      button {
+        min-height: 10vh;
+        display: block;
+        .image-container {
+          width: auto;
+        }
+      }
+
+      display: block;
+    }
+  }
+
+
+  .opened-item, .image-item {
+    .image-20x20 {
+      margin-right: 10px !important;
+    }
+    button {
+      display: block;
+    }
+    .MuiGrid-root {
+      flex-direction: column;
+    }
+
+    .avatar-container {
+    }
+    .right {
+      float: unset !important;
+    }
+
+  }
+
+  .image-item {
+
+    .image-options {
+      flex-direction: column;
+    }
+
+  }
+
+  .how-it-works-bg {
+    .image-item {
+      overflow-y: hidden;
+    }
+    .title {
+      .MuiImageListItemBar-title {
+        margin-top: 0 !important;
+      }
+    }
+  }
+
+  .how-it-works {
+    margin: 0 !important;
+    .how-it-works-menu {
+      display: none !important;
+    }
+    div[id] {
+      margin-left: 24px !important;
+      margin-right: 24px !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center;
+      .font-13 {
+        font-size: 12px;
+      }
+    }
+    .membership-items {
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center;
+    }
+  }
+
+    button, p, a, span, div {
+      margin-top: 10px !important;
+      margin-bottom: 10px !important;
+    }
+
+  .our-offerings {
+  
+    .float-right {
+      float: right !important;
+    }
+    .offering-container {
+      padding-left: 24px !important;
+      padding-right: 24px !important;
+      justify-content: space-between;
+    }
+    .font-16 {
+      font-size: 16px;
+    }
+    .font-28 {
+      font-size: 28px;
+    }
+    .MuiGrid-item {
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    .box {
+      border-bottom: 1px solid;
+    }
+  }
+
+  .artwork-page-navigation {
+    div {
+      margin: 0 !important;
+    }
+  }
+
+  .dialog-image, .dialog {
+    button.item {
+      .image-50x50 {
+        @include image-same-size(40px);
+      }
+    }
+    .chip-link, .copy-btn {
+      display: block;
+      padding: 4px !important;
+      span {
+        display: flex;
+        padding-bottom: 10px !important;
+      }
+    }
+    .MuiDialog-paper {
+      min-width: unset !important;
+      max-width: 90vw !important;
+      max-height: 100vh;
+    }
+    .font-13 {
+      font-size: 13px;
+    }
+    .font-16 {
+      font-size: 16px;
+    }
+
+    button {
+      font-size: 16px;
+    }
+
+    .artwork-about, .artwork-membership, .artwork-tokenomics {
+      padding: 0 !important;
+      * {
+        border-radius: 0 !important;
+      }
+
+      .membership-items {
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center;
+      }
+    }
+  }
+
+}
+
+

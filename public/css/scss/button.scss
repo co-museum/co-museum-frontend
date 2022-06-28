@@ -1,0 +1,135 @@
+
+
+@mixin co-button($bg, $color) {
+  text-transform: capitalize;
+  white-space: nowrap;
+  background-color: $bg !important;
+  color: $color;
+  border-radius: 4px;
+  border-style: solid;
+  border-width: 1px;
+  border-color: $bg;
+  &.btn-md {
+    padding: 10px 16px !important;
+    height: 48px;
+  }
+  &.small {
+    padding: 9px 15px !important;
+    height: 40px;
+  }
+  &.xs {
+    padding: 5px 12px !important;
+    height: 32px;
+  }
+  &.rounded {
+    @extend .rounded-button;
+  }
+  &.transparent {
+    background-color: transparent !important;
+  }
+  &.bordered {
+    border-color: $color !important;
+    &.xs {
+      padding: 4px 11px !important;
+    }
+    &.btn-md {
+      padding: 9px 15px !important;
+    }
+    &.small {
+      padding: 8px 14px !important;
+    }
+  }
+  &:hover {
+    border-color: $color;
+  }
+  img {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+}
+.full-size-button {
+  width: 100%;
+}
+
+.rounded-button {
+  border-radius: 30px !important;
+}
+
+.black-white-button {
+  @include co-button($black, $white);
+}
+
+.white-black-button {
+  @include co-button($white, $black);
+}
+
+.grey-button {
+  @include co-button($grey-1, $black-1);
+}
+.green-button {
+  @include co-button($green, $black-1);
+}
+
+.wallet-btn {
+  @extend .text-left;
+  @extend .w-100;
+  text-transform: capitalize !important;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  .wallet-btn-title {
+    display: inline-flex;
+    align-items: center;
+    img {
+      margin-right: 20px;
+    }
+  }
+
+}
+
+.btn-group-package {
+  height: 22px;
+  button {
+    width: 66px;
+    background-color: $white;
+    color: $black-2;
+    border-color: $black-2;
+    &.btn-txt {
+      cursor: default !important;
+      border-right: 2px solid $black-2 !important;
+      border-left: 1px solid !important;
+      &:hover {
+        color: $black-2;
+        border-color: $black-2 !important;
+        background-color: unset !important;
+      }
+    }
+    &:first-child, &:last-child {
+      color: $white;
+      width: 22px;
+      background-color: $black-2;
+      &:disabled {
+        opacity: 0.2;
+      }
+    }
+  }
+}
+
+.btn-payment-options {
+  button {
+    @extend .black-white-button;
+    border-color: $black !important;
+    opacity: 0.2;
+    width: 92px;
+    height: 22px;
+    margin-right: 8px !important;
+    color: $black-2;
+    background-color: $white !important;
+    &.active {
+      background-color: $black-2 !important;
+      color: $white;
+      opacity: 1;
+    }
+  }
+}

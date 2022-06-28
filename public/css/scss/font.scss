@@ -1,0 +1,135 @@
+@font-face {
+  font-family: "Suisse Intl"; 
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Black.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-BlackItalic.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Bold.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-BoldItalic.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Book.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-BookItalic.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Light.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-LightItalic.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Medium.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-MediumItalic.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Regular.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-RegularItalic.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-SemiBold.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-SemiBoldItalic.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Thin.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-ThinItalic.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Ultralight.otf");
+  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-UltralightItalic.otf");
+  src: url("/fonts/suisse-intl/suisse-intl-mono/SuisseIntlMono-Bold.otf");
+  src: url("/fonts/suisse-intl/suisse-intl-mono/SuisseIntlMono-Regular.otf");
+  src: url("/fonts/suisse-intl/suisse-intl-mono/SuisseIntlMono-Thin.otf");
+}
+*{
+  font-family: "Suisse Intl Mono", sans-serif !important;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 22px;
+  color: $black-2;
+
+}
+
+.font-capitalize {
+  text-transform: capitalize !important;
+}
+
+.text-d-none {
+  text-decoration: none;
+}
+
+.font-black {
+  &, * {
+    color: black !important;
+  }
+}
+
+.font-black-2 {
+  &, * {
+    color: $black-2 !important;
+  }
+}
+
+.font-grey-1 {
+  &, * {
+    color: $grey-1 !important;
+  }
+}
+
+.font-grey-2 {
+  &, * {
+    color: $grey-2 !important;
+  }
+}
+
+.font-grey-3 {
+  &, * {
+    color: $grey-3 !important;
+  }
+}
+
+.font-grey {
+  &, * {
+    color: $grey !important;
+  }
+}
+
+.font-white {
+  &, * {
+    color: $white !important;
+  }
+}
+
+.font-16 {
+  font-size: 16px;
+}
+.font-14 {
+  font-size: 14px;
+}
+.font-13 {
+  font-size: 13px;
+}
+.font-20 {
+  font-size: 20px;
+}
+.font-12 {
+  font-size: 12px;
+}
+.font-24 {
+  font-size: 24px;
+}
+.font-28 {
+  font-size: 28px;
+}
+.font-32 {
+  font-size: 32px !important;
+}
+.font-36 {
+  font-size: 36px !important;
+}
+.font-45 {
+  font-size: 45px !important;
+}
+
+.text-left {
+  text-align: left !important;
+}
+.text-right {
+  text-align: right !important;
+}
+.text-center {
+  text-align: center !important;
+}
+
+.ml-152px {
+  margin-left: 152px;
+}
+
+
+.line-h-22 {
+  line-height: 22px;
+}
+.line-h-40 {
+  line-height: 40px;
+}

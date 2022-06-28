@@ -1,0 +1,142 @@
+
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+  letter-spacing: 0.5px;
+}
+
+
+h1, h2, h3, h4, h5, h6, a, p {
+  letter-spacing: 0.5px;
+}
+
+.page-container {
+  margin: 48px 204px;
+}
+
+.offering-image {
+  padding: 48px;
+  background-color: $image-bg;
+}
+
+.image-container {
+  width: 100%;
+}
+
+.box {
+  border-radius: 4px;
+  &.box-p-0 {
+    >div {
+      padding: 0 !important;
+    }
+  }
+  >div {
+    padding: 12px 16px;
+  }
+}
+
+.box-info {
+  @extend .box;
+  background-color: $silver !important;
+  //width: 100%;
+  //height: 100%;
+  .box-caption {
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 19px;
+    img {
+      margin-right: 5px;
+    }
+  }
+
+}
+
+.box-white {
+  @extend .box;
+  background-color: $white !important;
+}
+
+.box-grey {
+  @extend .box;
+  background-color: $grey !important;
+}
+
+.box-grey-1 {
+  @extend .box;
+  background-color: $grey-1 !important;
+}
+
+.box-black-2 {
+  @extend .box;
+  background-color: $black-2 !important;
+}
+
+.box-green {
+  @extend .box;
+  background-color: $green !important;
+}
+.box-silver {
+  @extend .box;
+  background-color: $silver !important;
+  padding: 20px 0;
+}
+.percentage-slider {
+  .MuiSlider-thumb {
+    display: none;
+  }
+  .MuiSlider-track {
+    background-color: $black-1;
+    border-bottom-right-radius: 0 !important;
+    border-top-right-radius: 0 !important;
+  }
+  .MuiSlider-rail {
+    background-color: $white;
+  }
+  height: 20px;
+  padding-bottom: 0;
+}
+
+.readonly-text {
+  font-size: 16px;;
+  font-weight: 500;
+  color: $grey-3;
+}
+
+.tag-grey {
+  margin-right: 4px;
+  &:last-of-type {
+    margin-right: 0;
+  }
+  min-width: 60px;
+  height: 22px;
+  border-radius: 4px;
+  padding: 2px 8px;
+  color: $grey-3;
+  border-color: $grey-3;
+  span {
+    @extend .font-12;
+    line-height: 18px;
+  }
+  &.active {
+    border-color: $black;
+    background-color: $black;
+    span {
+      color: $white !important;
+    }
+  }
+}
+
+.container {
+  max-width: 100vw;
+}
+
+.css-yiavyu-MuiBackdrop-root-MuiDialog-backdrop {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+

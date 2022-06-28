@@ -1,0 +1,126 @@
+.artwork-about-wrapper {
+    .artwork-about-content {
+        padding: 0 20px;
+
+        .text-content-quote {
+            padding: 60px 70px;
+
+            p {
+                font-size: 18px;
+                color: black !important;
+                font-weight: 600;
+
+            }
+        }
+
+        .text-content-gallery {
+            padding: 60px 0;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            flex-direction: row;
+        }
+
+        .text-content-gray {
+            padding: 60px 110px;
+            display: flex;
+            background: $grey-1;
+            align-items: center;
+            justify-content: center;
+            flex-direction: row;
+            margin-bottom: -20px;
+            margin-left: -20px;
+            margin-right: -20px;
+            width: calc(100% + 40px);
+
+            a {
+                color: black !important;
+            }
+        }
+
+        .text-content {
+            padding: 60px 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+
+            &.double-padding {
+                justify-content: flex-start;
+
+                b {
+                    color: black !important;
+                }
+            }
+
+            h1 {
+                font-size: 40px;
+                line-height: 45px;
+                width: 100%
+            }
+
+            h2 {
+                width: 100%;
+                text-align: left;
+                margin-bottom: 0;
+            }
+
+            p {
+                margin-top: 0;
+                margin-bottom: 30px;
+                width: 100%;
+            }
+        }
+
+        .artwork-image-1 {
+            width: 100%;
+            height: 250px;
+            background: $grey-2;
+        }
+
+        .artwork-image-2,
+        .artwork-image-3,
+        .artwork-image-7 {
+            width: 50%;
+            height: 450px;
+            margin: 0 auto;
+            background: $grey-2;
+        }
+
+        .artwork-image-4,
+        .artwork-image-5,
+        .artwork-image-6 {
+            width: 100%;
+            height: 600px;
+            background: $grey-2;
+        }
+
+        .divider {
+            width: 100%;
+            height: 1px;
+            background: $grey-2;
+        }
+
+        .artwork-gallery-item {
+            h3 {
+                width: 100%;
+                text-align: center;
+            }
+            p {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        .button-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            button {
+                height: 48px;
+                padding: 10px 16px !important;
+            }
+        }
+    }
+}
