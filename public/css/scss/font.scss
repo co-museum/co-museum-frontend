@@ -1,29 +1,29 @@
 @font-face {
   font-family: "Suisse Intl"; 
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Black.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-BlackItalic.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Bold.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-BoldItalic.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Book.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-BookItalic.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Light.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-LightItalic.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Medium.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-MediumItalic.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Regular.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-RegularItalic.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-SemiBold.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-SemiBoldItalic.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Thin.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-ThinItalic.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-Ultralight.otf");
-  src: url("/fonts/suisse-intl/suisse-intl/SuisseIntl-UltralightItalic.otf");
-  src: url("/fonts/suisse-intl/suisse-intl-mono/SuisseIntlMono-Bold.otf");
-  src: url("/fonts/suisse-intl/suisse-intl-mono/SuisseIntlMono-Regular.otf");
-  src: url("/fonts/suisse-intl/suisse-intl-mono/SuisseIntlMono-Thin.otf");
+  src: url("/fonts/new/SuisseIntl-Regular-WebM.eot");
+  src: url("/fonts/new/SuisseIntl-Medium-WebS.eot");
 }
+
+@font-face {
+  font-family: "Suisse Intl Light";
+  src: url("/fonts/suisse-intl/SuisseIntl-Light.otf");
+}
+
+@font-face {
+  font-family: "Suisse Intl Light Italic";
+  src: url("/fonts/suisse-intl/SuisseIntl-LightItalic.otf");
+}
+
+.light-font {
+  font-family: "Suisse Intl Light" !important;
+}
+
+.light-font-italic {
+  font-family: "Suisse Intl Light  Italic" !important;
+}
+
 *{
-  font-family: "Suisse Intl Mono", sans-serif !important;
+  font-family: "Suisse Intl", sans-serif !important;
   font-size: 16px;
   font-weight: 400;
   line-height: 22px;
@@ -31,6 +31,11 @@
 
 }
 
+@mixin font-and-children($size) {
+  *, & {
+    font-size: $size;
+  }
+}
 .font-capitalize {
   text-transform: capitalize !important;
 }
@@ -82,34 +87,34 @@
 }
 
 .font-16 {
-  font-size: 16px;
+  @include font-and-children(16px);
 }
 .font-14 {
-  font-size: 14px;
+  @include font-and-children(14px);
 }
 .font-13 {
-  font-size: 13px;
+  @include font-and-children(13px);
 }
 .font-20 {
-  font-size: 20px;
+  @include font-and-children(20px);
 }
 .font-12 {
-  font-size: 12px;
+  @include font-and-children(12px);
 }
 .font-24 {
-  font-size: 24px;
+  @include font-and-children(24px);
 }
 .font-28 {
-  font-size: 28px;
+  @include font-and-children(28px);
 }
 .font-32 {
-  font-size: 32px !important;
+  @include font-and-children(32px);
 }
 .font-36 {
-  font-size: 36px !important;
+  @include font-and-children(36px);
 }
 .font-45 {
-  font-size: 45px !important;
+  @include font-and-children(45px);
 }
 
 .text-left {
@@ -132,4 +137,10 @@
 }
 .line-h-40 {
   line-height: 40px;
+}
+
+.fw-500 {
+  &, * {
+    font-weight: 500;
+  }
 }

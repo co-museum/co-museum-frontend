@@ -1,4 +1,36 @@
 .artwork-about-wrapper {
+
+    .custom-image-artwork {
+        height: calc(100% - 47px);
+        width: 100%;
+        background: black;
+        margin-bottom: 12px;
+        background: url("/images/BanksyShredded.jpeg") center no-repeat;
+        background-size: cover;
+    }
+
+    .artist-text {
+
+        .font-16 {
+            padding-right: 120px;
+        }
+
+    }
+
+    .light-font-italic {
+        font-family: "Suisse Intl Light Italic" !important;
+        margin-top: 8px;
+        font-size: 12px;
+    }
+
+    .padding-right-small {
+        padding-right: 15px !important;
+    }
+
+    .padding-left-small {
+        padding-left: 15px !important;
+    }
+
     .artwork-about-content {
         padding: 0 20px;
 
@@ -56,7 +88,6 @@
             h1 {
                 font-size: 40px;
                 line-height: 45px;
-                width: 100%
             }
 
             h2 {
@@ -69,7 +100,15 @@
                 margin-top: 0;
                 margin-bottom: 30px;
                 width: 100%;
+                font-family: "Suisse Intl Light" !important;
+
+                &.light-font-italic {
+                    font-family: "Suisse Intl Light Italic" !important;
+                    margin-top: 8px;
+                    font-size: 12px;
+                }
             }
+
         }
 
         .artwork-image-1 {

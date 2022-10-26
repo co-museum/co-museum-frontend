@@ -1,13 +1,34 @@
 import {Button,} from "@mui/material";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {MyCollectionPageState, MyCollectionPageStates} from "../utils/constants/my-collection-page-state";
 import MyCollectionConnectedWallet from "../utils/components/pages/my-collection/MyCollectionConnectedWallet";
 import MyCollectionPreConnectedWallet from "../utils/components/pages/my-collection/MyCollectionPreConnectedWallet";
 import MyCollectionZeroState from "../utils/components/pages/my-collection/MyCollectionZeroState";
+import {useSelector} from "react-redux";
+import {getClientProof} from "../services/base/SettingsService";
+import {getTierWithCode} from "../utils/constants/Tiers";
+import {getNFTs} from "../services/crowdsale/AllowanceCrowdsale";
 
 const MyCollection = () => {
 
     const [pageState, setPageState] = useState(MyCollectionPageState.PRE_CONNECTED_WALLET);
+    const wallet = useSelector((state) => state.wallet)
+    const [clientSettings, setClientSettings] = useState(null)
+    const [nfts, setNfts] = useState([])
+
+    useEffect(() => {
+        if(wallet.address) {
+            getClientProof(wallet.address).then(response => {
+                setClientSettings(response)
+            })
+
+            getNFTs(wallet.address).then(response => {
+                setNfts(response.ownedNfts ? response.ownedNfts : [])
+
+            })
+        }
+
+    }, [wallet])
 
     const data = {
         username: '@CrypticCowboy31337',
@@ -15,7 +36,7 @@ const MyCollection = () => {
         valueETH: 119.3078,
         currency: '$',
         tier: 'Genesis Member',
-        date: new Date('2021-11-21'),
+        date: new Date('2022-10-31'),
         numberOfNFT: 4
     }
     const item = {
@@ -37,21 +58,39 @@ const MyCollection = () => {
         {title: 'Random Member', item: 'Laugh now', id: 5135, img: '/images/tier-1.png'},
     ]
 
+    const notConnected = (wallet) => {
+        return !wallet || !wallet.address;
+    }
+
+    const hasAllocation = (clientSettings) => {
+        if(!clientSettings || !clientSettings.allocation) {
+            return false
+        }
+
+        const tier = getTierWithCode(parseInt(clientSettings.tiercode))
+        if(!tier) {
+            return false
+        }
+
+        const numberOfAllocations = clientSettings.allocation / tier.Rate
+
+        return numberOfAllocations >= 1
+    }
+
     return <div className={'container my-collection-page'}>
         {
-            MyCollectionPageStates.map(state => <Button key={'state-'+state} onClick={() => setPageState(MyCollectionPageState[state])}>{state}</Button>)
+            (notConnected(wallet)) && <MyCollectionPreConnectedWallet/>
         }
         {
-            pageState === MyCollectionPageState.PRE_CONNECTED_WALLET && <MyCollectionPreConnectedWallet/>
+            nfts.length === 0 && !hasAllocation(clientSettings) && <MyCollectionZeroState/>
         }
         {
-            pageState === MyCollectionPageState.ZERO_STATE && <MyCollectionZeroState/>
+            nfts.length === 0 &&
+            <MyCollectionConnectedWallet items={items} item={item} data={data} noNft clientSettings={clientSettings}/>
         }
         {
-            pageState === MyCollectionPageState.NO_NFT && <MyCollectionConnectedWallet items={items} item={item} data={data} noNft/>
-        }
-        {
-            pageState === MyCollectionPageState.CONNECTED_WALLET && <MyCollectionConnectedWallet items={items} item={item} data={data}/>
+            nfts.length !== 0 &&
+            <MyCollectionConnectedWallet items={items} item={item} data={data} nfts={nfts} clientSettings={clientSettings}/>
         }
     </div>;
 }

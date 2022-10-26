@@ -3,9 +3,35 @@ import Header from "./Header";
 import Footer from "./Footer";
 import {DialogWrapper} from "./DialogWrapper";
 import {ImageDialog} from "./ImageDialog";
+import {useDispatch} from "react-redux";
+import {changeAddressState} from "../../slices/WalletSlice";
+import {useEffect} from "react";
+import {getCurrentWalletConnected} from "../../services/base/WalletService";
 
 
 const PageLayout = ({children, title= 'Co-Museum'}) => {
+
+    const dispatch = useDispatch();
+
+    useEffect(async () => {
+
+        if (localStorage) {
+            dispatch(changeAddressState(await getCurrentWalletConnected()));
+        }
+
+        if (window.ethereum) {
+            window.ethereum
+                .enable()
+                .then(accounts => {
+                })
+                .catch(reason => {
+                    // Handle error. Likely the user rejected the login.
+                });
+        } else {
+            // The user doesn't have Metamask installed.
+        }
+    })
+
     return <DialogWrapper>
         <ImageDialog>
             <Head>

@@ -44,8 +44,8 @@ export const DialogWrapper = ({children}) => {
                 onClose={handleClose}>
                 <DialogTitle className={'dialog-title-box ' + options.titleBoxClass}>
                     <div>
-                        <p className={'dialog-title ' + options.titleClass}>{title}</p>
                         <p className={'dialog-description '+ options.descriptionClass}>{description}</p>
+                        <p className={'dialog-title ' + options.titleClass}>{title}</p>
                     </div>
 
                     {!hideClose && <IconButton

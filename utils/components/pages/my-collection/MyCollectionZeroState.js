@@ -9,16 +9,6 @@ const MyCollectionZeroState = () => {
 
     return (<>
         <div className={'my-collection-info d-flex center-flex'}>
-            <Box className={'box-green mr-1 p-m-0-m h-auto-m'}>
-                <div>
-                    <Button className={'green-button bordered p-0 float-right m-xxs font-12-m'} onClick={() => setUsdActiveHeader(v => !v)}>
-                            <img src="/images/switch.svg" className={'image-10x10'}/>
-                            {usdActiveHeader? 'USD': 'ETH'}
-                    </Button>
-                    <Typography className={'font-black-2 font-16 p-m-0-m'}>{strings.myCollection.totalValue} <QuestionMark/></Typography>
-                    <Typography className={'font-black-2 font-20 p-m-0-m'}>_</Typography>
-                </div>
-            </Box>
             <Box className={'box-white mr-1 p-m-0-m h-auto-m'}>
                 <div>
                     <Typography className={'font-black-2 font-16 p-m-0-m'}>{strings.myCollection.membershipTier}</Typography>

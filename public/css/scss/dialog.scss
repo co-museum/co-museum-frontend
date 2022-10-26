@@ -16,9 +16,12 @@
     border-radius: 10px !important;
     background-color: $white;
     .dialog-title {
-      @extend .font-24;
+      @extend .font-32;
       @extend .p-0;
       @extend .m-0;
+
+      font-weight: 600;
+      margin-top: 5px !important;
     }
     .dialog-description {
       @extend .font-16;
@@ -34,11 +37,15 @@
     .social-networks {
       .item {
         @extend .p-0;
-        margin-right: 12px;
+        margin-right: 8px;
       }
       .divider {
-        margin-top: 30px !important;
+        margin-top: 20px !important;
         margin-bottom: 20px !important;
+
+        &.no-margin-top {
+          margin-top: 0 !important;
+        }
       }
       .chip-link{
         width: 80%;
@@ -145,6 +152,11 @@
       display: flex;
       justify-content: center;
       padding: 40px 0;
+
+      img {
+        min-width: 480px !important;
+        width: 30% !important;
+      }
     }
 
     .owl-dots {
@@ -166,6 +178,7 @@
     th {
       padding-top: 8px;
       padding-bottom: 8px;
+      padding-left: 0;
     }
   }
 }
@@ -240,6 +253,7 @@
   }
   &.loading-page {
     .loading {
+      text-align: center;
       display: block;
       position: absolute;
       left: 0;
@@ -308,5 +322,25 @@
         margin: 0 10px;
       }
     }
+  }
+}
+
+.preview-image-content {
+  .owl-prev,
+  .owl-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    &:hover {
+      background-color: transparent !important;
+    }
+  }
+  
+  .owl-prev {
+    left: 0;
+  }
+  
+  .owl-next {
+    right: 0;
   }
 }

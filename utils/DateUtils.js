@@ -1,5 +1,10 @@
 
 export const formatDuration = (duration, {firstLetter = false} = {firstLetter: false}) => {
+
+    if(!duration) {
+        return ''
+    }
+
     const days = addZeroOnStart(duration.days());
     const hours = addZeroOnStart(duration.hours());
     const minutes = addZeroOnStart(duration.minutes());

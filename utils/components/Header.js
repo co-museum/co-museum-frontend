@@ -3,20 +3,36 @@ import {useRouter} from 'next/router'
 import strings from "../localization";
 import {characters} from "../constants/characters";
 import {substring} from "../StringUtils";
-import {useContext, useState} from "react";
-
-import {useWeb3} from "@3rdweb/hooks"
+import {useContext, useEffect, useState} from "react";
 import DialogContext from "../context/DialogContext";
 import {NoWalletConnected} from "./dialogs/NoWalletConnected";
 import {AccountInfo} from "./dialogs/AccountInfo";
+import {changeAddressState} from "../../slices/WalletSlice";
+import {useDispatch, useSelector} from "react-redux";
+import {getCurrentNetwork} from "../../services/base/WalletService";
 
 const Header = () => {
-
-    const { address } = useWeb3();
-
+    const dispatch = useDispatch();
     const {initDialog} = useContext(DialogContext);
     const [anchorEl, setAnchorEl] = useState(null);
+    const [network, setNetwork] = useState(null)
     const open = Boolean(anchorEl);
+
+    const wallet = useSelector((state) => state.wallet)
+
+    useEffect(() => {
+
+        if(wallet && wallet.address) {
+            getCurrentNetwork().then(response => {
+                setNetwork(response?.name)
+            })
+        }
+        else {
+            setNetwork(null)
+        }
+
+    }, [wallet])
+
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -30,6 +46,21 @@ const Header = () => {
         {title: strings.header.howItWorks, link: '/how-it-works'},
     ]
 
+    useEffect(async () => {
+        addWalletListener()
+    }, [])
+
+    const addWalletListener = () => {
+
+        if (window.ethereum) {
+            window.ethereum.on("accountsChanged", (accounts) => {
+                if (accounts.length > 0) {
+                    dispatch(changeAddressState(accounts.length > 0 ? accounts[0] : ''));
+                }
+            })
+        }
+    }
+
     const router = useRouter()
 
     const isCurrentPath = (path, compareWith) => {
@@ -41,8 +72,8 @@ const Header = () => {
 
     const connectToWallet = () => {
         initDialog({
-            title: strings.header.noWalletConnected,
-            description: strings.header.noWalletConnectedDescription,
+            title: strings.header.noWalletConnectedDescription,
+            description: strings.header.noWalletConnected,
             titleClass: 'font-20',
             descriptionClass: 'font-16 font-grey',
             content: <NoWalletConnected/>
@@ -65,7 +96,7 @@ const Header = () => {
                 aria-haspopup="true"
                 onClick={handleClick}
             >
-                <img src="/images/menu.svg" className="image-16x16" />
+                <img src="/images/menu.svg" className="image-16x16"/>
             </IconButton>
             <Menu
                 PaperProps={{className: 'menu-m-options'}}
@@ -74,7 +105,8 @@ const Header = () => {
                 onClose={handleClose}
             >
                 {links.map(({link, title, compareWith}) => (
-                    <MenuItem component={Link} key={link} selected={ isCurrentPath(link, compareWith)} href={link} onClick={handleClose}>
+                    <MenuItem component={Link} key={link} selected={isCurrentPath(link, compareWith)} href={link}
+                              onClick={handleClose}>
                         {title}
                     </MenuItem>
                 ))}
@@ -83,32 +115,45 @@ const Header = () => {
         </div>
     }
 
-    return<header className={'header'}>
-        <div className={'header-container'}>
+    return <header className={'header'}>
+        {
+            network && process.env.NEXT_PUBLIC_NETWORK !== network &&
+            <div className={'network-message'}>
+                <p>You are viewing data from {process.env.NEXT_PUBLIC_NETWORK} but your wallet is connected to the {network} network</p>
+            </div>
+
+        }
+
+        <div className={'header-container p-m-0-m'}>
             <div className={'main-menu'}>
                 <Link href={'/'} key={'home'}>
-                    <img className='logo hide-m' src={"/images/logo.svg"} />
-                    <img className='logo show-m' src={"/images/logo-m.svg"} />
+                    <img className='logo hide-m' src={"/images/logo.svg"}/>
+                    <img className='logo show-m' src={"/images/logo-m.svg"}/>
                 </Link>
 
-                    <div className="show-m m-menu">
-                        {
-                            !address &&
-                            <Button variant={"contained"} className={'black-white-button xs'} onClick={connectToWallet}>{strings.header.connectYourWallet}</Button>
-                        }
-                        {
-                            address &&
-                            <Button variant={"contained"} className={'black-white-button xs'} onClick={disconnectWallet}><span className={'mr-1 font-white'}>{substring(address)}</span> <img src="/images/green-point.svg" className={'image-16x16'}/></Button>
-                        }
-                        {responsiveMenu()}                    
-                    </div>
+                <div className="show-m m-menu">
+                    {
+                        !wallet.address &&
+                        <Button variant={"contained"} className={'black-white-button xs'}
+                                onClick={connectToWallet}>{strings.header.connectYourWallet}</Button>
+                    }
+                    {
+                        wallet.address &&
+                        <Button variant={"contained"} className={'black-white-button xs'}
+                                onClick={disconnectWallet}><span
+                            className={'mr-1 font-white'}>{substring(wallet.address)}</span> <img src="/images/green-point.svg"
+                                                                                           className={'image-16x16'}/></Button>
+                    }
+                    {responsiveMenu()}
+                </div>
 
             </div>
             <div>
                 <div className={'header-links hide-m'}>
                     {
-                        links.map(({title, link, compareWith}) => <Link href={link} key={link} underline="none" className={`link ${isCurrentPath(link, compareWith) && 'active'}`}>
-                                {title} {characters.to}
+                        links.map(({title, link, compareWith}) => <Link href={link} key={link} underline="none"
+                                                                        className={`link ${isCurrentPath(link, compareWith) && 'active'}`}>
+                                {title} <span className='link-arrow'>{characters.to}</span>
                             </Link>
                         )
                     }
@@ -117,12 +162,16 @@ const Header = () => {
             <div>
                 <div className="hide-m">
                     {
-                        !address &&
-                        <Button variant={"contained"} className={'black-white-button xs'} onClick={connectToWallet}>{strings.header.connectYourWallet}</Button>
+                        !wallet.address &&
+                        <Button variant={"contained"} className={'black-white-button xs'}
+                                onClick={connectToWallet}>{strings.header.connectYourWallet}</Button>
                     }
                     {
-                        address &&
-                        <Button variant={"contained"} className={'black-white-button xs'} onClick={disconnectWallet}><span className={'mr-1 font-white'}>{substring(address)}</span> <img src="/images/green-point.svg" className={'image-16x16'}/></Button>
+                        wallet.address &&
+                        <Button variant={"contained"} className={'black-white-button xs'}
+                                onClick={disconnectWallet}><span
+                            className={'mr-1 font-white'}>{substring(wallet.address)}</span> <img src="/images/green-point.svg"
+                                                                                           className={'image-16x16'}/></Button>
                     }
                 </div>
             </div>

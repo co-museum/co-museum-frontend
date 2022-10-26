@@ -1,5 +1,4 @@
-import NumberFormat from "react-number-format";
-
+import { NumericFormat } from 'react-number-format';
 
 export const substring = (value, {firstBreak = 4, lastBreak = 4, joiner = '...'} = {firstBreak: 4, lastBreak: 3, joiner : '...'}) => {
     if (!value) {
@@ -14,5 +13,10 @@ export const substring = (value, {firstBreak = 4, lastBreak = 4, joiner = '...'}
 
 
 export const NumberToString = (value) => {
-    return <NumberFormat value={value} displayType={'text'} thousandSeparator={','}/>
+
+    if(!value) {
+        return ''
+    }
+
+    return <NumericFormat value={value.toFixed(2)} displayType={'text'} thousandSeparator={','}/>
 }

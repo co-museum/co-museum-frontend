@@ -15,7 +15,7 @@ import QuestionMark from "../../dialogs/QuestionMark";
 import moment from "moment";
 import {QuestionMarkType} from "../../../constants/QuestionMarkType";
 import {Close} from "@mui/icons-material";
-import {useContext, useState} from "react";
+import {useContext, useEffect, useState} from "react";
 import ShareDialog from "../../dialogs/ShareDialog";
 import {ArtworkPageState} from "../../../constants/ArtworkPageState";
 import ArtworkPage from "../../dialogs/ArtworkPage";
@@ -23,8 +23,17 @@ import DialogContext from "../../../context/DialogContext";
 import ImageDialogContext from "../../../context/ImageDialogContext";
 import {NumberToString} from "../../../StringUtils";
 import Release from "../../dialogs/Release";
+import {getOpenSeaCollectionStats} from "../../../../services/opensea/OpenSeaService";
+import {getRate} from "../../../../services/rateService/RateService";
+import Tiers, {getTierWithCode} from "../../../constants/Tiers";
 
-const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
+import dynamic from "next/dynamic";
+
+const OwlCarousel = dynamic(import("react-owl-carousel"), {ssr: false});
+
+const MyCollectionConnectedWallet = ({data,item, items, clientSettings, noNft = false, nfts = []}) => {
     const {initDialog} = useContext(DialogContext);
     const {showImage} = useContext(ImageDialogContext);
 
@@ -32,6 +41,23 @@ const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
     const [activeItem, setActiveItem] = useState(null);
     const [usdActiveHeader, setUsdActiveHeader] = useState(true);
     const [usdActive, setUsdActive] = useState(false);
+    const [collectionStats, setCollectionStats] = useState(null);
+    const [ethRate, setEthRate] = useState(0)
+
+    useEffect(() => {
+        getOpenSeaCollectionStats(process.env.NEXT_PUBLIC_COLLECTION_SLUG).then(response => {
+
+            if(!response) {
+                return
+            }
+
+            setCollectionStats(response.stats)
+        })
+
+        getRate().then(response => {
+            setEthRate(response.USD)
+        })
+    }, [])
 
     const onShare = () => {
         initDialog({
@@ -44,8 +70,8 @@ const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
 
     const openArtworkPage = (pageState = ArtworkPageState.ABOUT) => {
         initDialog({
-            title: `${item?.title} (${item?.year})`,
-            description: item.owner,
+            title: item.owner,
+            description: `${item?.title} (${item?.year})`,
             titleClass: 'font-20',
             descriptionClass: 'font-32 font-black',
             dialogClass: 'artwork-page',
@@ -112,24 +138,120 @@ const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
 
     }
 
+    const getNFTImage = (tokenId) => {
+
+        if(!tokenId) {
+            return ''
+        }
+
+        return process.env.NEXT_PUBLIC_IPFS + '/' + tokenId + '.png'
+    }
+
+    const getNFTTitle = (tokenId) => {
+
+        if(!tokenId) {
+            return ''
+        }
+
+        const token = parseInt(tokenId);
+
+        if(token <= 18) {
+            return 'Friend'
+        }
+
+        if(token > 18 && token <= 238) {
+            return 'Foundation'
+        }
+
+        if(token > 238) {
+            return 'Genesis'
+        }
+    }
+
+    const getNFTType = (tokenId) => {
+
+        if(!tokenId) {
+            return ''
+        }
+
+        const token = parseInt(tokenId);
+
+        if(token <= 18) {
+            return Tiers.Friend
+        }
+
+        if(token > 18 && token <= 238) {
+            return Tiers.Foundation
+        }
+
+        if(token > 238) {
+            return Tiers.Genesis
+        }
+    }
+
+    const renderNFTs = () => {
+
+        return <ImageList cols={1} className={'my-collection-items'}>
+            {
+                nfts.map(item => <ImageListItem className={'box-grey-1 image-item'}>
+                    <img src={getNFTImage(item.tokenId)} className={'image-container image-gr-bg c-pointer image-156x156-m'} loading={'lazy'} onClick={() => openItem(item)}/>
+                    <ImageListItemBar
+                        sx={{
+                            background: 'transparent'
+                        }}
+                        onClick={(v) => openItem(item)}
+                        className={'px-0 c-pointer'}
+                        title={<>
+                            <span className={'font-16 mr-1'}>Laugh now</span>
+                            <span className={'font-16 font-grey'}>#{item.tokenId}</span>
+                            <div className={'float-right'}>
+                                <img src="/images/circle-right.svg" className={'image-16x16'}/>
+                            </div>
+                        </>}
+                        position="below"
+                    />
+                    <ImageListItemBar
+                        sx={{
+                            background: 'transparent',
+                        }}
+                        className={'items-top-form'}
+                        title={<div className={'item-options'}>
+                            <div className={'item-title c-pointer'} onClick={(v) => openItem(item)}>
+                                <img src={'/images/grey-point.svg'} className={'image-12x12'} loading={'lazy'}/>
+                                <div className={'font-12'}>{getNFTTitle(item.tokenId)}</div>
+                            </div>
+                            <div className={'float-right c-pointer'} onClick={onShare}>
+                                <img src={'/images/share.svg'} className={'image-container image-12x12'} loading={'lazy'}/>
+                            </div>
+                        </div>}
+                        position="top"
+                    />
+                </ImageListItem>
+                )
+            }
+        </ImageList>
+    }
+
+    const renderMiniNFTWidget = (nfts) => {
+
+        let result = [];
+
+        for(let nft of nfts) {
+            result.push(
+                <img src={getNFTImage(nft.tokenId)}/>
+            )
+        }
+
+        return <div className={'mini-nfts'}>
+            <div className={'images-container'}>
+                {result}
+            </div>
+            {nfts.length} x NFTs
+        </div>
+    }
 
     return (<>
         <div className={'my-collection-info d-flex center-flex'}>
-            <Box className={'box-green mr-1 p-m-0-m h-auto-m w-100-m'}>
-                <div>
-                    <Typography className={'font-black-2 font-16 p-m-0-m'}>
-                        {strings.myCollection.totalValue} <QuestionMark />
-                        <Button className={'green-button bordered p-0 float-right m-xxs font-12-m'} onClick={() => setUsdActiveHeader(v => !v)}>
-                            <img src="/images/switch.svg" className={'image-10x10'}/>
-                            {usdActiveHeader? 'USD': 'ETH'}
-                        </Button>
-                    </Typography>
-                    <Typography className={'font-20 p-m-0-m'}>
-                        {usdActiveHeader && <>{data.currency} {NumberToString(data.valueUSD)}</>}
-                        {!usdActiveHeader && <>{NumberToString(data.valueETH)}</>}
-                    </Typography>
-                </div>
-            </Box>
             <Box className={'box-white mr-1 p-m-0-m h-auto-m'}>
                 <div>
                     <Typography className={'font-black-2 font-16 p-m-0-m'}>{strings.myCollection.membershipTier}</Typography>
@@ -139,7 +261,7 @@ const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
                             noNft && '-'
                         }
                         {
-                            !noNft && <span>{data.tier}</span>
+                            !noNft && <span>{getTierWithCode(clientSettings?.tiercode)?.Name}</span>
                         }
                     </Typography>
                 </div>
@@ -155,7 +277,7 @@ const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
                     <Typography className={'font-black-2 font-16 p-m-0-m'}>{strings.myCollection.numberOfNFT}</Typography>
                     <Typography className={'font-20 p-m-0-m'}>
                         {
-                            !noNft && <><img style={{height: '20px'}} src='/images/4nfts.png'/>{data.numberOfNFT} x NFTs</>
+                            !noNft && renderMiniNFTWidget(nfts)
                         }
                         {
                             noNft && '_'
@@ -176,11 +298,11 @@ const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
                             </div>
                             <div className={'item-description'}>
                                 <Typography className={'font-grey-1 font-16'}>{strings.myCollection.description}</Typography>
-                                <Typography className={'font-grey font-13'}>{item?.description}</Typography>
+                                <Typography className={'font-grey font-16'}>{item?.description}</Typography>
                             </div>
                             <div className={'item-info'}>
                                 <Box className={'box-green no-bottom-radius'}><div>
-                                    <Typography className={'font-black-2 font-16'}>{strings.myCollection.totalTokensOwned} <QuestionMark/></Typography>
+                                    <Typography className={'font-black-2 font-16'}>{strings.myCollection.totalTokensOwned} <QuestionMark title={"Total Tokens Owned"} description={"The number of unwrapped $BKLN tokens owned. $BKLN tokens wrapped in your membership NFTs are not included in this value."}/></Typography>
                                     <Typography className={'font-20'}>
                                         <span className={'mr-5px'}>{NumberToString(item.totalTokens)}</span>
                                         <span>
@@ -191,29 +313,36 @@ const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
                                 </div></Box>
                                 <Box className={'box-white no-radius'}><div>
                                     <Typography className={'font-black-2 font-16'}>
-                                        {strings.myCollection.currentArtworkValue} <QuestionMark/>
+                                        {strings.myCollection.currentArtworkValue} <QuestionMark title={"Current artwork value"} description={"Effectively, $BKLN tokens market cap in USD. Total supply of $BKLN tokens multiplied by the current BKLN/USDC exchange rate in Co-Museum's primary liquidity pool."}/>
                                         <Button className={'white-black-button bordered p-0 float-right'} onClick={() => setUsdActive(v => !v)}>
                                             <img src="/images/switch.svg" className={'image-10x10'}/>
                                             {usdActive? 'USD': 'ETH'}
                                         </Button>
                                     </Typography>
                                     <Typography className={'font-20'}>
-                                        {usdActive && <span>{item.currency} {NumberToString(item.currentArtworkValueUSD)}</span>}
-                                        {!usdActive && <span>{NumberToString(item.currentArtworkValueETH)}</span>}
-                                    </Typography>
-                                </div></Box>
-                                <Box className={'box-white no-top-radius'}><div>
-                                    <Typography className={'font-black-2 font-16'}>{strings.myCollection.tokenPrice} <QuestionMark/></Typography>
-                                    <Typography className={'font-20'}>
-                                        <span>{item.currency} {NumberToString(item.tokenPrice)}</span>
+                                        {usdActive && <span>{item.currency} {NumberToString(collectionStats?.market_cap * ethRate)}</span>}
+                                        {!usdActive && <span>{NumberToString(collectionStats?.market_cap)}</span>}
                                     </Typography>
                                 </div></Box>
                             </div>
                         </Grid>
                         <Grid item xs={6} className={`br-x-1 image-item w-100-m-b ${activeItem? 'd-none':''}`}>
-                            <img src={'/images/preview-image.png'} className={'image-container'}/>
+                            <OwlCarousel className='owl-theme white-nav' loop={true} items={1} nav={false}>
+                                <div className='item'>
+                                    <img src="/images/preview-image.png" className={'image-container'}/>
+                                </div>
+                                <div className='item'>
+                                    <img src="/images/preview-image.png" className={'image-container'}/>
+                                </div>
+                                <div className='item'>
+                                    <img src="/images/preview-image.png" className={'image-container'}/>
+                                </div>
+                                <div className='item'>
+                                    <img src="/images/preview-image.png" className={'image-container'}/>
+                                </div>
+                            </OwlCarousel>
                             <div className={'image-options pb-14px flex-row-between'}>
-                                <IconButton onClick={() => showImage({url: '/images/preview-image.png'})}><img src={'/images/zoom-in.svg'} className={'image-24x24'}/></IconButton>
+                                <IconButton onClick={() => showImage({images: ['/images/preview-image.png']})}><img src={'/images/zoom-in.svg'} className={'image-24x24'}/></IconButton>
                                 <Button className={'grey-button m-xxs'} onClick={() => openArtworkPage()}>{strings.ourOfferings.findOutMore}</Button>
                                 <Button className={'black-white-button bordered m-xxs'} onClick={onShare}><img src="/images/share-light.svg" className={'image-14x14'} /> {strings.ourOfferings.share}</Button>
                             </div>
@@ -226,7 +355,7 @@ const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
                                 </Typography>
                             </div>
                             <div className={'my-nfts '+ (noNft && 'no-nfts')}>
-                                {!noNft && imageItems()}
+                                {!noNft && renderNFTs()}
                                 {noNft && <>
                                     <IconButton className={'become-a-member'} onClick={() => openArtworkPage(ArtworkPageState.MEMBERSHIP)}>
                                         <img src="/images/locked.svg" className={'image-45x45'}/>
@@ -246,7 +375,7 @@ const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
                                     <div className="title">
                                         <div className="item-title">
                                             <img src="/images/grey-point.svg" className={'image-20x20'}/>
-                                            <span className={'font-16 font-white'}>{activeItem?.title}</span>
+                                            <span className={'font-16 font-white'}>{getNFTTitle(activeItem?.tokenId)}</span>
                                             <QuestionMark type={QuestionMarkType.WHITE} btnClass={'p-0 mx-5px'}/>
                                         </div>
                                         <div className="right">
@@ -271,7 +400,7 @@ const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
                                         <Grid item xs={'auto'}>
                                             <Avatar
                                                 className={'avatar image-156x156-m'}
-                                                src="/images/preview-nft.png"
+                                                src={getNFTImage(activeItem?.tokenId)}
                                                 sx={{ width: 410, height: 410 }}
                                                 variant="square"
                                             />
@@ -284,9 +413,33 @@ const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
                                                     Membership Features
                                                 </p>
                                                 <div className={'font-13 font-grey membership-content'}>
-                                                    <p>Access to Genesis Membership group</p>
-                                                    <p>Access to galleries and artists</p>
-                                                    <p>1 to 1 token allocation for next 3 drops</p>
+                                                    {
+                                                        getNFTType(activeItem?.tokenId)?.Code === Tiers.Foundation.Code &&
+                                                        <>
+                                                            <p>Individual viewing rights + 1 guest</p>
+                                                            <p>Access to Friend and Patron IRL events</p>
+                                                            <p>Access to Patron collectibles and merch</p>
+                                                        </>
+                                                    }
+
+                                                    {
+                                                        getNFTType(activeItem?.tokenId)?.Code === Tiers.Friend.Code &&
+                                                        <>
+                                                            <p>Individual viewing rights</p>
+                                                            <p>Access to Friend IRL events</p>
+                                                            <p>Access to Friend collectibles and merch</p>
+                                                        </>
+                                                    }
+
+                                                    {
+                                                        getNFTType(activeItem?.tokenId)?.Code === Tiers.Genesis.Code &&
+                                                        <>
+                                                            <p>Individual viewing rights + 3 guests</p>
+                                                            <p>Access to all events + exclusive VIP events</p>
+                                                            <p>Access to Alpha collectibles and merch</p>
+                                                        </>
+                                                    }
+
                                                     <br/>
                                                     <Button className={'black-white-button bordered xs'} href={'/how-it-works#membership-tiers'}>
                                                         <span className={'font-13 font-white'}>{strings.common.learnMore}</span>
@@ -304,11 +457,11 @@ const MyCollectionConnectedWallet = ({data,item, items, noNft = false}) => {
                                                 BKLN ≈ $53,433.13
                                             </span>
                                             </div>
+                                            <Button className={'black-white-button-disabled bordered action-btn xs'}>
+                                                <span className={'font-16 font-white'} onClick={openRelease}>{strings.common.release}</span>
+                                            </Button>
                                             <Button className={'white-black-button bordered action-btn xs'}>
                                                 <span className={'font-16'}>{strings.myCollection.viewOnOpenSea}</span>
-                                            </Button>
-                                            <Button className={'black-white-button bordered action-btn release xs'}>
-                                                <span className={'font-16 font-white'} onClick={openRelease}>{strings.common.release}</span>
                                             </Button>
 
                                         </Grid>

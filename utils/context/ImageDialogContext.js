@@ -1,7 +1,7 @@
 import {createContext} from "react";
 
 const ImageDialogContext = createContext({
-    showImage: ({url=''}, onClose = (result) => {}) => {}
+    showImage: ({images=[]}, onClose = (result) => {}) => {}
 });
 
 export default ImageDialogContext;

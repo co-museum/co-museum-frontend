@@ -5,7 +5,7 @@ import {CopyToClipboard} from 'react-copy-to-clipboard';
 
 const ShareDialog = ({link}) => {
     return <>
-        <Divider className={'divider mx-m'}/>
+        <Divider className={'divider mx-m no-margin-top'}/>
         <div className={'d-flex content-center'}>
             <Button className={'item'}>
                 <img src="/images/facebook.svg" className={'image-40x40'}/>

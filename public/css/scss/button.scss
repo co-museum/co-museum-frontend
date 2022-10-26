@@ -57,6 +57,18 @@
 
 .black-white-button {
   @include co-button($black, $white);
+
+  &.Mui-disabled {
+    color: $white;
+    opacity: .7;
+  }
+}
+
+.black-white-button-disabled {
+  @include co-button($black, $white);
+  opacity: 0.3;
+  pointer-events: none;
+
 }
 
 .white-black-button {
@@ -117,6 +129,8 @@
 }
 
 .btn-payment-options {
+  text-align: right;
+
   button {
     @extend .black-white-button;
     border-color: $black !important;

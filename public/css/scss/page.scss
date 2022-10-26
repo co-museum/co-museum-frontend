@@ -7,21 +7,33 @@ html {
 body {
   margin: 0;
   overflow-x: hidden;
-  letter-spacing: 0.5px;
 }
 
 
-h1, h2, h3, h4, h5, h6, a, p {
-  letter-spacing: 0.5px;
-}
+
 
 .page-container {
-  margin: 48px 204px;
+  margin: 48px 102px;
+
+  @media screen and (min-width: $break-md) {
+    margin: 48px 15px;
+  }
+
+  @media screen and (min-width: $break-lg) {
+    margin: 48px 204px;
+  }
 }
 
 .offering-image {
   padding: 48px;
   background-color: $image-bg;
+
+  .owl-dots {
+    position: absolute;
+    right: -70px;
+    top: calc(50% - 50px);
+    transform: rotate(90deg);
+  }
 }
 
 .image-container {
@@ -39,6 +51,13 @@ h1, h2, h3, h4, h5, h6, a, p {
     padding: 12px 16px;
   }
 }
+
+.membership-item {
+  >div {
+    padding: 12px 0 !important;
+  }
+}
+
 
 .box-info {
   @extend .box;
@@ -140,3 +159,51 @@ h1, h2, h3, h4, h5, h6, a, p {
 }
 
 
+
+
+.owl-carousel {
+  &.white-nav, &.black-nav {
+    .owl-dots {
+      .owl-dot {
+        padding: 8px;
+        span {
+          visibility: hidden;
+        }  
+      }
+    }
+  }
+  &.white-nav {
+    .owl-dots {
+      .owl-dot {
+        background-position: center !important;
+        background: transparent url('/images/dot-white.svg') no-repeat 100%;
+        &.active {
+          background: transparent url('/images/dot-white-active.svg') no-repeat 100%;
+        }
+      }
+    }
+  }
+  &.black-nav {
+    .owl-dots {
+      .owl-dot {
+        background: transparent url('/images/dot-black.svg') no-repeat 100%;
+        &.active {
+          background: transparent url('/images/dot-black-active.svg') no-repeat 100%;
+        }
+      }
+    }
+  }
+}
+
+.card-visible {
+  opacity: 1;
+  height: unset;
+  transition: .15s;
+}
+
+.card-hidden {
+  opacity: 0;
+  height: 0;
+  transition: .15s;
+  overflow: hidden;
+}
